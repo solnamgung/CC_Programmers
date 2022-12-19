@@ -1,5 +1,7 @@
 package Lv0;
 
+import java.util.Arrays;
+
 /**
  * 머쓱이는 태어난 지 6개월 된 조카를 돌보고 있습니다.
  * 조카는 아직 "aya", "ye", "woo", "ma" 네 가지 발음을 최대 한 번씩 사용해 조합한(이어 붙인) 발음밖에 하지 못합니다.
@@ -22,7 +24,18 @@ public class Babble {
 
     public int solution(String[] babbling) {
         int answer = 0;
+        for (String str : babbling) {
+            if (str.contains("ayaaya") || str.contains("yeye") || str.contains("woowoo") || str.contains("mama")) {
+                continue;
+            }
+            String result = str.replaceAll("aya", "").replaceAll("ye", "").
+                    replaceAll("woo", "").replaceAll("ma", "");
 
+            if (result.length() == 0) {
+                answer++;
+            }
+
+        }
         return answer;
     }
 }
