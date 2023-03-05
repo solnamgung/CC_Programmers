@@ -34,7 +34,6 @@ public class Babble {
             if (result.length() == 0) {
                 answer++;
             }
-
         }
         return answer;
     }
