@@ -155,4 +155,43 @@
                 YEARS, MONTHS
      ORDER BY
                 YEARS, MONTHS;
+                
+                
+ --8. print the result containing order_id, product_id and YN_status
+ -- YN_status is to check if IN_DATE should be "출고완료" until 05.01, others should be "출고미정" or "출고대기".
+ 
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+                
+                
+                
+
+
+
+
+
+                
+                
+                
               
