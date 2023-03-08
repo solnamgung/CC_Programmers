@@ -157,26 +157,60 @@
                 YEARS, MONTHS;
                 
                 
- --8. print the result containing order_id, product_id and YN_status
- -- YN_status is to check if IN_DATE should be "출고완료" until 05.01, others should be "출고미정" or "출고대기".
+                
+ --8. Calculate the Fees ((Price * the rate of dis) * period), History_ID Extract car_type first,
+ -- calculate the period between START_DATE and END_DATE, check if DURATION_TYPE and * discount_rate
+ -- the rate 5,8,15 by truck
  
            
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
+            SELECT
+                HISTORY_ID,
+                FEES
+         FROM
+                CAR_RENTAL_COMPANY_CAR c
+         JOIN
+                CAR_RENTAL_COMPANY_RENTAL_HISTORY h
+           ON   
+                h.CAR_ID = c.CAR_ID
+         JOIN
+                CAR_RENTAL_COMPANY_DISCOUNT_PLAN p
+           ON
+                c.CAR_TYPE = p.CAR_TYPE
+       
+                
+-- 8. Calculate the Fees ((Price * the rate of dis) * period), History_ID Extract car_type first,
+-- calculate the period between START_DATE and END_DATE, check if DURATION_TYPE and * discount_rate
+ 
+
+		SELECT             
+               h.HISTORY_ID,
+               ROUND (
+                       c.DAILY_FEE * ( 
+                               CASE 
+                                    WHEN DATEDIFF(h.END_DATE, h.START_DATE) + 1 < 7  THEN 1
+                                    WHEN DATEDIFF(h.END_DATE, h.START_DATE) + 1 < 30 THEN 0.95
+                                    WHEN DATEDIFF(h.END_DATE, h.START_DATE) + 1 < 90 THEN 0.92
+                               ELSE 0.85
+                               END ) * (DATEDIFF(h.END_DATE, h.START_DATE) + 1))   AS FEE
+          FROM
+               CAR_RENTAL_COMPANY_CAR c
+          JOIN
+               CAR_RENTAL_COMPANY_RENTAL_HISTORY h
+            ON
+               h.CAR_ID = c.CAR_ID
+          JOIN          
+               CAR_RENTAL_COMPANY_DISCOUNT_PLAN p
+            ON
+               p.CAR_TYPE = c.CAR_TYPE
+          WHERE
+                c.CAR_TYPE = '트럭'
+       GROUP BY
+                HISTORY_ID
+       ORDER BY
+                FEE DESC , HISTORY_ID DESC ;
+               
+                            
+ 
            
            
            
