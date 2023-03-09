@@ -210,6 +210,154 @@
                 FEE DESC , HISTORY_ID DESC ;
                
                             
+ -- 9. extract the data where the name in 'Lucy', 'Ella', 'Pickle', 'Rogan','Sabrina' ,'Mitty'
+ 
+        SELECT ANIMAL_ID,
+               NAME,
+               SEX_UPON_INTAKE
+          FROM
+                ANIMAL_INS
+         WHERE
+                NAME IN ('Lucy', 'Ella', 'Pickle', 'Rogan','Sabrina' ,'Mitty') ;
+ 
+ -- 10. extract the data where the name contains "el". then select colums of animal_id and  name in Dog,
+ -- but it's doesn't matter if the word is capital letter of small letter.
+ 
+ 	    SELECT
+               ANIMAL_ID,
+               NAME
+          FROM
+                ANIMAL_INS
+         WHERE
+                ANIMAL_TYPE = 'Dog'
+           AND  UPPER(NAME) LIKE  UPPER('%el%')
+      ORDER BY
+                NAME ASC;
+ 
+ 
+ -- the other way
+ 		SELECT
+               ANIMAL_ID,
+               NAME
+          FROM
+                ANIMAL_INS
+         WHERE
+                ANIMAL_TYPE = 'Dog'
+           AND  (NAME LIKE '%el%' or NAME LIKE '%El%' or  NAME LIKE '%eL%' or NAME LIKE '%EL%')
+      ORDER BY
+                NAME ASC;
+                
+                
+                
+ -- 11. Extract ANIMAL_ID, NAME, something whether animals are sprayed or Neutered with O, if not then check X.
+     	
+        SELECT ANIMAL_ID,
+               NAME,
+               CASE
+                    WHEN SEX_UPON_INTAKE = 'Neutered Male' THEN 'O' 
+                    WHEN SEX_UPON_INTAKE = 'Spayed Female' THEN 'O' 
+                    WHEN SEX_UPON_INTAKE = 'Intact Male'   THEN 'X' 
+                    WHEN SEX_UPON_INTAKE = 'Intact Female' THEN 'X' 
+                END AS NUETERING
+          FROM
+               ANIMAL_INS
+
+ -- the other way
+ 
+         SELECT ANIMAL_ID,
+                NAME,
+                CASE
+                    WHEN SEX_UPON_INTAKE LIKE 'Intact%' THEN 'X' ELSE 'O' 
+                END AS NUETERING
+           FROM
+                ANIMAL_INS ;
+ 
+ 
+ -- 12. Extract the two of the NAME, ID who are adapted the most in a long period.
+ 
+   WITH T AS  ( 
+        SELECT 
+               ins.ANIMAL_ID,
+               ins.NAME,
+     DATEDIFF(DATE_FORMAT(outs.DATETIME, '%Y-%m-%d'), DATE_FORMAT(ins.DATETIME, '%Y-%m-%d')) PERIOD
+          FROM 
+               ANIMAL_INS ins
+          JOIN 
+               ANIMAL_OUTS outs 
+            ON 
+               outs.ANIMAL_ID = ins.ANIMAL_ID 
+      ORDER BY
+               PERIOD DESC
+            )
+  
+      SELECT
+            T.ANIMAL_ID,
+            T.NAME
+        FROM
+            T
+       LIMIT 2;
+ 
+ 
+ -- 13. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+   
+                
+                
+                
+                
+                
+                
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
            
            
