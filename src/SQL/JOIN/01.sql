@@ -299,13 +299,21 @@
  
  
  -- 13. 
- 
- 
- 
- 
- 
- 
- 
+	SELECT m.member_name, r.review_text, DATE_FORMAT(r.review_date, '%Y-%m-%d') review_date
+	FROM REST_REVIEW r LEFT JOIN MEMBER_PROFILE m ON r.member_id = m.member_id,
+	    (
+	    SELECT member_id
+	    FROM REST_REVIEW r 
+	    GROUP BY member_id
+	    HAVING COUNT(review_id) = 
+	        (SELECT MAX(cnt) 
+	         FROM (SELECT COUNT(*) cnt FROM REST_REVIEW GROUP BY member_id) tb1)
+	    ) tb2
+	WHERE tb2.member_id = m.member_id
+	ORDER BY 3 ASC, 2 AS
+	C;
+	 
+
  
  
  
