@@ -310,78 +310,36 @@
 	         FROM (SELECT COUNT(*) cnt FROM REST_REVIEW GROUP BY member_id) tb1)
 	    ) tb2
 	WHERE tb2.member_id = m.member_id
-	ORDER BY 3 ASC, 2 AS
-	C;
+	ORDER BY 3 ASC, 2 AS ;
+	
+	
+ -- 14. extract the three flavour by descending order total_order
+	   select
+                T.flavor       AS FLAVOR
+           from
+                (select
+                      f.flavor           as flavor,
+                      sum(f.total_order) as total_ord1,
+                      sum(j.total_order) as total_ord2
+                  from
+                       first_half f
+                  join
+                       july j
+                    on 
+                       j.flavor = f.flavor
+                  group by
+                        f.flavor
+                 ) T
+        order by
+                 T.total_ord1 + T.total_ord2 desc
+           limit 3;
+           
+ -- 15. 
+	
+	
+	
+	
 	 
 
  
  
- 
- 
-
-
-
-
-
-
-
-
-
-
-   
-                
-                
-                
-                
-                
-                
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-           
-           
-           
-           
-           
-           
-                
-                
-                
-
-
-
-
-
-                
-                
-                
-              
